@@ -3,9 +3,9 @@ class Dog
   attr_accessor :name, :breed
   attr_reader :id
 
-  def initialize(name:, breed:, id = nil)
-    @name = name
-    @breed = breed
+  def initialize(hash, id = nil)
+    @name = hash[:name]
+    @breed = hash[:breed]
     @id = id
   end
 
@@ -42,8 +42,8 @@ class Dog
     self
   end
 
-  def self.create(name:, breed:)
-    Dog.new(name, breed).save
+  def self.create(hash)
+    Dog.new(hash[:name], hash[:breed]).save
   end
 
   def self.new_from_db(row)
