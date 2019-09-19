@@ -39,9 +39,23 @@ class Dog
       DB[:conn].execute(sql, self.name, self, breed)
       @id = DB[:conn].execute("SELECT last_insert_rowid() FROM dogs")[0][0]
     end
+    self
   end
 
-  def self.create
+  def self.create(:name, :breed)
+    Dog.new(name, breed).save
+  end
 
+  def self.new_from_db(row)
+    Dog.new(row[1], row[2], row[0])
+  end
+
+  def self.find_by_id(id)
+    sql = <<-SQL
+    SELECT * FROM dogs
+    WHERE id = ?
+    SQL
+
+    self.new_from_db(DB[:conn].execute(sql, id)[0])
   end
 end
