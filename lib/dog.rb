@@ -63,7 +63,7 @@ class Dog
     dog = DB[:conn].execute("SELECT * FROM dogs
               WHERE name = ? AND breed = ?",
               hash[:name], hash[:breed])[0]
-    if dog = nil
+    if dog == nil
       self.create(hash)
     else
       Dog.new(hash, dog[0])
